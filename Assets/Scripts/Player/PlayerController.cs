@@ -20,8 +20,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*onTheGround = Physics.CheckCapsule(groundTester.position, groundTester.position, 0.1f, layerMask);*/
-        Collider[] colliders = Physics.OverlapBox(groundTester.position, groundTester.position, Quaternion.identity, layerMask);
+        Collider[] colliders = Physics.OverlapSphere(groundTester.position, 0.51f, layerMask);
 
         if (colliders.Length > 0) onTheGround = true;
         else onTheGround = false;
@@ -36,7 +35,7 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
 
         //Player movement
-        rgBody.velocity = new Vector2(speedForce * x, rgBody.velocity.y);
+        if(onTheGround) rgBody.velocity = new Vector2(speedForce * x, rgBody.velocity.y);
     }
 
     void Jump()
