@@ -16,17 +16,11 @@ public class BlockRotation : MonoBehaviour
         CheckStage();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void SetStages()
     {
         float blockDifference = 1.056f;
 
-        //Setting stage position x 
+        //Setting stage positions
         stages.Add(new Vector3(center.position.x, center.position.y + blockDifference, 0));
         stages.Add(new Vector3(center.position.x + blockDifference, center.position.y + blockDifference, 0));
         stages.Add(new Vector3(center.position.x + blockDifference, center.position.y, 0));
@@ -49,6 +43,17 @@ public class BlockRotation : MonoBehaviour
                     break;
                 }
             }
+        }
+    }
+
+    public void RotateBlock()
+    {
+        for (int i = 0; i < blocksToRotate.Length; i++)
+        {
+            blockStages[i] += 2;
+            if (blockStages[i] > 7) blockStages[i] -= 8;
+
+            blocksToRotate[i].position = stages[blockStages[i]];
         }
     }
 }
