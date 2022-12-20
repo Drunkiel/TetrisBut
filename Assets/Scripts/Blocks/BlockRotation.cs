@@ -21,14 +21,14 @@ public class BlockRotation : MonoBehaviour
         float blockDifference = 1.056f;
 
         //Setting stage positions
-        stages.Add(new Vector3(center.position.x, center.position.y + blockDifference, 0));
-        stages.Add(new Vector3(center.position.x + blockDifference, center.position.y + blockDifference, 0));
-        stages.Add(new Vector3(center.position.x + blockDifference, center.position.y, 0));
-        stages.Add(new Vector3(center.position.x + blockDifference, center.position.y - blockDifference, 0));
-        stages.Add(new Vector3(center.position.x, center.position.y - blockDifference, 0));
-        stages.Add(new Vector3(center.position.x - blockDifference, center.position.y - blockDifference, 0));
-        stages.Add(new Vector3(center.position.x - blockDifference, center.position.y, 0));
-        stages.Add(new Vector3(center.position.x - blockDifference, center.position.y + blockDifference, 0));
+        stages.Add(new Vector3(center.localPosition.x, center.localPosition.y + blockDifference, 0));
+        stages.Add(new Vector3(center.localPosition.x + blockDifference, center.localPosition.y + blockDifference, 0));
+        stages.Add(new Vector3(center.localPosition.x + blockDifference, center.localPosition.y, 0));
+        stages.Add(new Vector3(center.localPosition.x + blockDifference, center.localPosition.y - blockDifference, 0));
+        stages.Add(new Vector3(center.localPosition.x, center.localPosition.y - blockDifference, 0));
+        stages.Add(new Vector3(center.localPosition.x - blockDifference, center.localPosition.y - blockDifference, 0));
+        stages.Add(new Vector3(center.localPosition.x - blockDifference, center.localPosition.y, 0));
+        stages.Add(new Vector3(center.localPosition.x - blockDifference, center.localPosition.y + blockDifference, 0));
     }
 
     void CheckStage()
@@ -37,7 +37,7 @@ public class BlockRotation : MonoBehaviour
         {
             for (int j = 0; j < 8; j++)
             {
-                if (blocksToRotate[i].position == stages[j])
+                if (blocksToRotate[i].localPosition == stages[j])
                 {
                     blockStages[i] = j;
                     break;
@@ -53,7 +53,7 @@ public class BlockRotation : MonoBehaviour
             blockStages[i] += 2;
             if (blockStages[i] > 7) blockStages[i] -= 8;
 
-            blocksToRotate[i].position = stages[blockStages[i]];
+            blocksToRotate[i].localPosition = stages[blockStages[i]];
         }
     }
 }

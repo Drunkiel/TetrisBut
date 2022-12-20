@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && onTheGround)
+        if ((Input.GetKeyDown(KeyCode.Space)) && onTheGround)
         {
             rgBody.AddForce(new Vector2(0f, jumpForce));
         }
