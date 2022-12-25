@@ -4,6 +4,7 @@ public class BlockMovement : MonoBehaviour
 {
     public float cooldown;
     private float resCooldown;
+    public float timeToStop;
     public int directionToMove;
     private Transform player;
 
@@ -28,7 +29,7 @@ public class BlockMovement : MonoBehaviour
         }
         else
         {
-            if (cooldown > 2) Movement();
+            if (cooldown > timeToStop) Movement();
             cooldown -= Time.deltaTime;
         }
     }
