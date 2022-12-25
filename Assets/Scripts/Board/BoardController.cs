@@ -20,8 +20,9 @@ public class BoardController : MonoBehaviour
 
         int randomNumber = Random.Range(0, restOfBlocks.Length);
 
-        Instantiate(allBlockTypes[restOfBlocks[randomNumber]], placeToSpawn.position, Quaternion.identity);
-        restOfBlocks = restOfBlocks.Except(new int[] { restOfBlocks[randomNumber] }).ToArray();
+        Instantiate(allBlockTypes[restOfBlocks[randomNumber]], placeToSpawn.position, Quaternion.identity); //Creating block from array
+        GetComponent<ColorController>().ChangeColor(restOfBlocks[randomNumber]); //Setting board color
+        restOfBlocks = restOfBlocks.Except(new int[] { restOfBlocks[randomNumber] }).ToArray(); //Deleting picked block from array
         spawnBlock = false;
     }
 
