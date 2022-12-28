@@ -6,7 +6,7 @@ public class BlockMovement : MonoBehaviour
     private float resCooldown;
     public float timeToStop;
     public int directionToMove;
-    private Transform player;
+    public Transform player;
 
     public CheckCollisions[] _checkCollisions;
     BlockController _blockController;
@@ -15,8 +15,17 @@ public class BlockMovement : MonoBehaviour
     void Start()
     {
         resCooldown = cooldown;
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         _blockController = GetComponent<BlockController>();
+
+        try
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+        catch (System.Exception)
+        {
+            _blockController.AutoDestroy(false);
+            Destroy(GetComponent<BlockController>());
+        }
     }
 
     // Update is called once per frame
@@ -65,7 +74,7 @@ public class BlockMovement : MonoBehaviour
             if (Mathf.Floor(distances[i]) == 0)
             {
                 zeroAppearance++;
-                if (zeroAppearance >= 1) _blockController.AutoDestroy();
+                if (zeroAppearance >= 1) _blockController.AutoDestroy(true);
             }
             else if (Mathf.Floor(distances[i]) < nearestBlock && Mathf.Floor(distances[i]) != 0) nearestBlock = distances[i];
         }
@@ -73,7 +82,7 @@ public class BlockMovement : MonoBehaviour
         transform.Translate(0, -1.058f * Mathf.Floor(nearestBlock), 0);
 
         _blockController.SetBlocksToBoard();
-        _blockController.AutoDestroy();
+        _blockController.AutoDestroy(true);
     }
 
     void Movement()
