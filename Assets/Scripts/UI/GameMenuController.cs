@@ -1,9 +1,24 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameMenuController : MonoBehaviour
 {
     public bool isMenuOpen;
     public GameObject menuUI;
+
+    public Button[] buttons;
+
+    public void ReadyButton()
+    {
+        buttons[0].interactable = false;
+
+        for (int i = 1; i < buttons.Length; i++)
+        {
+            buttons[i].interactable = true;
+        }
+
+        GameObject.FindGameObjectWithTag("Board").GetComponent<BoardController>().spawnBlock = true;
+    }
 
     public void RotateButton()
     {
@@ -17,16 +32,28 @@ public class GameMenuController : MonoBehaviour
         {
             _nonStandardBlockRotation.RotateBlock();
         }
+        else return;
     }
 
     public void FallButton()
     {
-        BlockMovement _blockMovement = GameObject.FindGameObjectWithTag("FallingBlock").GetComponent<BlockMovement>();
+        GameObject block = GameObject.FindGameObjectWithTag("FallingBlock");
+        BlockMovement _blockMovement = block.GetComponent<BlockMovement>();
 
         if (_blockMovement.cooldown > _blockMovement.timeToStop)
         {
             _blockMovement.cooldown = _blockMovement.timeToStop;
         }
+
+        if (block.TryGetComponent<BlockRotation>(out BlockRotation _blockRotation))
+        {
+            Destroy(_blockRotation);
+        }
+        else if (block.TryGetComponent<NonStandardBlockRotation>(out NonStandardBlockRotation _nonStandardBlockRotation))
+        {
+            Destroy(_nonStandardBlockRotation);
+        }
+        else return;
     }
 
     public void SettingsMenuButton()
