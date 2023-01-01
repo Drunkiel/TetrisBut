@@ -4,6 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     public float speedForce;
     public float jumpForce;
+    private bool dirToRight;
 
     public float radius;
     public bool onTheGround;
@@ -30,8 +31,6 @@ public class PlayerController : MonoBehaviour
 
         Movement();
         Jump();
-
-        RotatePlayer();
     }
 
     void Movement()
@@ -40,12 +39,15 @@ public class PlayerController : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
 
         //Player movement
-        if(onTheGround)
+        if (onTheGround)
         {
             rgBody.velocity = new Vector2(speedForce * x, rgBody.velocity.y);
 
             if (x > 0 || x < 0) anim.Play("Run");
             else anim.Play("Nothing");
+
+            if (x < 0 && dirToRight) RotatePlayer();
+            else if (x > 0 && !dirToRight) RotatePlayer();
         }
     }
 
@@ -59,6 +61,9 @@ public class PlayerController : MonoBehaviour
 
     void RotatePlayer()
     {
-        transform.Rotate(0, 180, 0);
+        dirToRight = !dirToRight;
+        Vector3 heroScale = gameObject.transform.localScale;
+        heroScale.x *= -1;
+        gameObject.transform.localScale = heroScale;
     }
 }
