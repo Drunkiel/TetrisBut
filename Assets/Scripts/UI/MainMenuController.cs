@@ -5,13 +5,13 @@ public class MainMenuController : MonoBehaviour
 {
     public static int pickedDifficulty;
 
-    public bool isDifficultyMenuOpen;
-    public GameObject difficultyMenu;
+    public bool[] menusOpen;
+    public GameObject[] menus;
 
-    public void PlayButtonButton()
+    public void OpenCloseMenu(int i)
     {
-        isDifficultyMenuOpen = !isDifficultyMenuOpen;
-        difficultyMenu.SetActive(isDifficultyMenuOpen);
+        menusOpen[i] = !menusOpen[i];
+        menus[i].SetActive(menusOpen[i]);
     }
 
     public void PlayModeButton(int difficulty)
