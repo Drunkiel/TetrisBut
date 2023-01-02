@@ -72,6 +72,14 @@ public class NonStandardBlockRotation : MonoBehaviour
 
     public void RotateBlock()
     {
+        BlockMovement _blockMovement = GetComponent<BlockMovement>();
+
+        for (int i = 0; i < blocksToRotate.Length; i++)
+        {
+            if (_blockMovement._checkCollisions[i].CheckWallLeftCollision()) transform.position = new Vector3(transform.position.x + _blockMovement.blockDifference, transform.position.y, 0);
+            if (_blockMovement._checkCollisions[i].CheckWallRightCollision()) transform.position = new Vector3(transform.position.x - _blockMovement.blockDifference, transform.position.y, 0);
+        }
+
         switch (step)
         {
             case 0:

@@ -6,6 +6,7 @@ public class BlockRotation : MonoBehaviour
     public Transform center;
     public Transform[] blocksToRotate;
     public int[] blockStages;
+    public CheckCollisions[] _checkCollisions;
     public List<Vector3> stages = new List<Vector3>();
 
     // Start is called before the first frame update
@@ -48,8 +49,13 @@ public class BlockRotation : MonoBehaviour
 
     public void RotateBlock()
     {
+        BlockMovement _blockMovement = GetComponent<BlockMovement>();
+
         for (int i = 0; i < blocksToRotate.Length; i++)
         {
+            if(_blockMovement._checkCollisions[i].CheckWallLeftCollision()) transform.position = new Vector3(transform.position.x + _blockMovement.blockDifference, transform.position.y, 0);
+            if(_blockMovement._checkCollisions[i].CheckWallRightCollision()) transform.position = new Vector3(transform.position.x - _blockMovement.blockDifference, transform.position.y, 0);
+
             blockStages[i] += 2;
             if (blockStages[i] > 7) blockStages[i] -= 8;
 
