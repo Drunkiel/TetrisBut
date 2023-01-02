@@ -10,6 +10,7 @@ public class BlockMovement : MonoBehaviour
 
     public CheckCollisions[] _checkCollisions;
     BlockController _blockController;
+    public float blockDifference = 1.056f;
 
     // Start is called before the first frame update
     void Start()
@@ -58,10 +59,23 @@ public class BlockMovement : MonoBehaviour
         return false;
     }
 
+    bool CheckIfPlayer(float value)
+    {
+        bool[] ifTrue = new bool[_checkCollisions.Length];
+
+        for (int i = 0; i < _checkCollisions.Length; i++)
+        {
+            ifTrue[i] = _checkCollisions[i].CheckPlayerCollision(value);
+            if (ifTrue[i]) return true;
+        }
+
+        return false;
+    }
+
     void CalculateDistanceToFall()
     {
         float[] distances = new float[_checkCollisions.Length];
-        float nearestBlock = 10;
+        float nearestBlock = 100;
 
         for (int i = 0; i < distances.Length; i++)
         {
@@ -79,6 +93,9 @@ public class BlockMovement : MonoBehaviour
             else if (Mathf.Floor(distances[i]) < nearestBlock && Mathf.Floor(distances[i]) != 0) nearestBlock = distances[i];
         }
 
+        if (nearestBlock >= 10) nearestBlock -= 1;
+
+        if (CheckIfPlayer(nearestBlock)) GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>().StopGame(true);
         transform.Translate(0, -1.058f * Mathf.Floor(nearestBlock), 0);
 
         _blockController.SetBlocksToBoard();
@@ -87,7 +104,6 @@ public class BlockMovement : MonoBehaviour
 
     void Movement()
     {
-        float blockDifference = 1.056f;
         float playerX = 0;
 
         if (TryGetComponent<BlockRotation>(out BlockRotation _blockRotation)) playerX = Mathf.Floor(player.position.x - _blockRotation.center.position.x);
