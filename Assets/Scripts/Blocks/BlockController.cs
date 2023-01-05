@@ -4,7 +4,8 @@ public class BlockController : MonoBehaviour
 {
     public void SetBlocksToBoard()
     {
-        Transform board = GameObject.FindGameObjectWithTag("Board").transform.GetChild(4).transform;
+        GameObject board = GameObject.FindGameObjectWithTag("Board");
+        Transform boardTransform = board.transform.GetChild(4).transform;
         Transform[] blocks = new Transform[transform.childCount];
 
         for (int i = 0; i < blocks.Length; i++)
@@ -14,15 +15,20 @@ public class BlockController : MonoBehaviour
 
         for (int i = 0; i < blocks.Length; i++)
         {
-            if (blocks[i].name != "Center") blocks[i].parent = board;
+            if (blocks[i].name != "Center")
+            {
+                blocks[i].parent = boardTransform;
+                board.GetComponentInChildren<SetHighestPoint>().CheckHighestPoint(Mathf.FloorToInt(blocks[i].position.y));
+            }
+
         }
     }
 
     public void AutoDestroy(bool destroyAll)
     {
         //Destroying parts to avoid bugs
-        if (TryGetComponent<BlockRotation>(out BlockRotation _blockRotation)) Destroy(GetComponent<BlockRotation>());
-        else if (TryGetComponent<NonStandardBlockRotation>(out NonStandardBlockRotation _nonStandardBlockRotation)) Destroy(GetComponent<NonStandardBlockRotation>());
+        if (TryGetComponent<BlockRotation>(out BlockRotation _blockRotation)) Destroy(_blockRotation);
+        else if (TryGetComponent<NonStandardBlockRotation>(out NonStandardBlockRotation _nonStandardBlockRotation)) Destroy(_nonStandardBlockRotation);
         Destroy(GetComponent<BlockMovement>());
 
         if (destroyAll)
