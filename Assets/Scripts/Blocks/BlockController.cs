@@ -5,7 +5,7 @@ public class BlockController : MonoBehaviour
     public void SetBlocksToBoard()
     {
         GameObject board = GameObject.FindGameObjectWithTag("Board");
-        Transform boardTransform = board.transform.GetChild(4).transform;
+        Transform boardTransform = board.transform.GetChild(5).transform;
         Transform[] blocks = new Transform[transform.childCount];
 
         for (int i = 0; i < blocks.Length; i++)
@@ -20,7 +20,6 @@ public class BlockController : MonoBehaviour
                 blocks[i].parent = boardTransform;
                 board.GetComponentInChildren<SetHighestPoint>().CheckHighestPoint(Mathf.FloorToInt(blocks[i].position.y));
             }
-
         }
     }
 
@@ -34,8 +33,7 @@ public class BlockController : MonoBehaviour
         if (destroyAll)
         {
             //Spawning next block
-            BoardController board = GameObject.FindGameObjectWithTag("Board").GetComponent<BoardController>();
-            board.spawnBlock = true;
+            GameObject.FindGameObjectWithTag("Board").GetComponent<BoardController>().spawnBlock = true; 
 
             //Final destroy
             Destroy(gameObject);
