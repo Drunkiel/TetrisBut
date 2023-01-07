@@ -14,6 +14,15 @@ public class CheckCollisions : MonoBehaviour
         else return 0;
     }
 
+    public bool CheckPlayerCollision(float value)
+    {
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), value, layerMask[2]))
+        {
+            return true;
+        }
+        else return false;
+    }
+
     public bool CheckWallLeftCollision()
     {
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), 1, layerMask[1]))
