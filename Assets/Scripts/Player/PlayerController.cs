@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public bool onTheGround;
     public Transform groundTester;
     public LayerMask layerMask;
+    public static bool isDead;
 
     Rigidbody rgBody;
     Animator anim;
@@ -29,8 +30,15 @@ public class PlayerController : MonoBehaviour
         if (colliders.Length > 0) onTheGround = true;
         else onTheGround = false;
 
-        Movement();
-        Jump();
+        if(!isDead)
+        {
+            Movement();
+            Jump();
+        }
+        else
+        {
+            anim.Play("Death");
+        }
     }
 
     void Movement()
