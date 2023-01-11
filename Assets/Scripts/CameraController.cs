@@ -19,16 +19,20 @@ public class CameraController : MonoBehaviour
 
     void CheckIfNeedToUpdate()
     {
-        if (Mathf.Floor(player.position.y) + 4 > cameraHeight + 1)
+        if (Mathf.Floor(player.position.y) + 5 > cameraHeight + 1)
         {
-            cameraHeight++;
-            transform.position = new Vector3(0, cameraHeight, -10);
+            UpdateHeight(1);
         }
 
-        if(Mathf.Floor(player.position.y) + 4 < cameraHeight)
+        if(Mathf.Floor(player.position.y) + 5 < cameraHeight)
         {
-            cameraHeight--;
-            transform.position = new Vector3(0, cameraHeight, -10);
+            UpdateHeight(-1);
         }
+    }
+
+    void UpdateHeight(int value)
+    {
+        cameraHeight += value;
+        transform.position = new Vector3(0, cameraHeight, -10);
     }
 }
