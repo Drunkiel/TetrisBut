@@ -1,5 +1,5 @@
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class ScoreController : MonoBehaviour
 {
@@ -44,7 +44,7 @@ public class ScoreController : MonoBehaviour
 
     void CheckPlayerHeight()
     {
-        playerHeight = Mathf.FloorToInt(player.transform.position.y) + 3;
+        playerHeight = Mathf.FloorToInt(player.transform.position.y) + 4;
         height.text = playerHeight.ToString();
     }
 }
