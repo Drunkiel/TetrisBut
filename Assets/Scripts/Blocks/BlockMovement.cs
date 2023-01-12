@@ -96,8 +96,9 @@ public class BlockMovement : MonoBehaviour
         if (nearestBlock >= 10) nearestBlock -= 1;
 
         if (CheckIfPlayer(nearestBlock)) GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>().StopGame(true);
-        transform.Translate(0, -1.058f * Mathf.Floor(nearestBlock), 0);
+        transform.Translate(0, -blockDifference * Mathf.Floor(nearestBlock), 0);
 
+        SetToCheck();
         _blockController.SetBlocksToBoard();
         _blockController.AutoDestroy(true);
     }
@@ -122,6 +123,19 @@ public class BlockMovement : MonoBehaviour
         else directionToMove = 0;
 
         transform.position = new Vector3(transform.position.x + blockDifference * directionToMove, transform.position.y, 0);
+    }
+
+    void SetToCheck()
+    {
+        CheckBlocksRow _checkBlocksRow = GameObject.FindGameObjectWithTag("Board").transform.GetChild(1).GetComponent<CheckBlocksRow>();
+        _checkBlocksRow.blocksHeight.Clear();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if(transform.GetChild(i).name != "Center") _checkBlocksRow.blocksHeight.Add(transform.GetChild(i).transform.position.y);
+        }
+
+        _checkBlocksRow.check = true;
     }
 }
 
