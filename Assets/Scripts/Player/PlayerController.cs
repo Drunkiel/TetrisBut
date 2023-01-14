@@ -12,12 +12,16 @@ public class PlayerController : MonoBehaviour
     public LayerMask layerMask;
     public static bool isDead;
 
+    ParticleController _particleController;
+    ParticleSystem runParticle;
     Rigidbody rgBody;
 
     // Start is called before the first frame update
     void Start()
     {
         rgBody = GetComponent<Rigidbody>();
+        _particleController = GetComponent<ParticleController>();
+        runParticle = _particleController.runParticle.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -28,7 +32,7 @@ public class PlayerController : MonoBehaviour
         if (colliders.Length > 0) onTheGround = true;
         else onTheGround = false;
 
-        if(!isDead)
+        if (!isDead)
         {
             Movement();
             Jump();
@@ -40,13 +44,25 @@ public class PlayerController : MonoBehaviour
         //Initializing inputs
         float x = Input.GetAxis("Horizontal");
 
+        if ((x < 0 || x > 0) && onTheGround && !runParticle.isPlaying) runParticle.Play();
+        else if ((x == 0 || !onTheGround) && !runParticle.isStopped) runParticle.Stop();
+
         //Player movement
         if (onTheGround)
         {
             rgBody.velocity = new Vector2(speedForce * x, rgBody.velocity.y);
 
-            if (x < 0 && dirToRight) RotatePlayer();
-            else if (x > 0 && !dirToRight) RotatePlayer();
+            if (x < 0)
+            {
+                if (dirToRight) RotatePlayer();
+                _particleController.RotateParticle(1);
+            }
+
+            if (x > 0)
+            {
+                if (!dirToRight) RotatePlayer();
+                _particleController.RotateParticle(-1);
+            }
         }
     }
 
