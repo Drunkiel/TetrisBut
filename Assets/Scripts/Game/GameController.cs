@@ -16,6 +16,21 @@ public class GameController : MonoBehaviour
 
     public void RunGame()
     {
+        switch (MainMenuController.pickedDifficulty)
+        {
+            case 0:
+                ScoreController.pointsMultiplier = 0.5f;
+                break;
+
+            case 1:
+                ScoreController.pointsMultiplier = 1f;
+                break;
+
+            case 2:
+                ScoreController.pointsMultiplier = 2f;
+                break;
+        }
+
         isGameRunning = true;
         GameObject.FindGameObjectWithTag("Board").GetComponent<BoardController>().spawnBlock = true;
     }
@@ -24,7 +39,7 @@ public class GameController : MonoBehaviour
     {
         isGameRunning = false;
 
-        if(!gameOver)
+        if (!gameOver)
         {
             title.text = "Winner";
             title.color = new Color32(0, 255, 0, 1);
@@ -47,5 +62,7 @@ public class GameController : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        PlayerController.isDead = false;
+        ScoreController.points = 0;
     }
 }

@@ -8,6 +8,7 @@ public class ScoreController : MonoBehaviour
     public TMP_Text lifeTime;
 
     public static int points;
+    public static float pointsMultiplier;
     public int playerHeight;
     public float livingTime;
 
@@ -31,7 +32,7 @@ public class ScoreController : MonoBehaviour
 
     public static void AddScore(int value)
     {
-        points += value;
+        points += Mathf.RoundToInt(value * pointsMultiplier);
     }
 
     void Timer()
