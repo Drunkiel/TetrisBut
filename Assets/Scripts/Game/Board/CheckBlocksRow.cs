@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ public class CheckBlocksRow : MonoBehaviour
 {
     public bool check;
     public List<float> blocksHeight = new List<float>();
+    public float delay;
 
     public int blocksInRow;
     public GameObject[] caughtBlocks;
@@ -16,13 +18,10 @@ public class CheckBlocksRow : MonoBehaviour
     {
         if (check)
         {
+            if (blocksHeight.Count < 1) check = false;
             blocksHeight.Sort();
-            print(blocksHeight[0]);
 
-            for (int i = 0; i < blocksHeight.Count; i++)
-            {
-                if (SendLaser(blocksHeight[i])) CheckBlocks();
-            }
+            StartCoroutine("Delay");
         }
     }
 
@@ -56,5 +55,15 @@ public class CheckBlocksRow : MonoBehaviour
         if (caughtBlocks.Length == 10) print("Full row: " + caughtBlocks[0].transform.position.y);
 
         check = false;
+    }
+
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(delay);
+
+        for (int i = 0; i < blocksHeight.Count; i++)
+        {
+            if (SendLaser(blocksHeight[i])) CheckBlocks();
+        }
     }
 }
