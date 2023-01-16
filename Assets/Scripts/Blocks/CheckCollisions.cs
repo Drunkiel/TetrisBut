@@ -23,9 +23,9 @@ public class CheckCollisions : MonoBehaviour
         else return false;
     }
 
-    public bool CheckWallLeftCollision()
+    public bool CheckWallLeftCollision(int lenght)
     {
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), 1, layerMask[1]))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), lenght, layerMask[1]))
         {
             return true;
         }
@@ -35,9 +35,9 @@ public class CheckCollisions : MonoBehaviour
         }
     }
 
-    public bool CheckWallRightCollision()
+    public bool CheckWallRightCollision(int lenght)
     {
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), 1, layerMask[1]))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), lenght, layerMask[1]))
         {
             return true;
         }

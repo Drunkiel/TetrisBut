@@ -53,8 +53,8 @@ public class BlockRotation : MonoBehaviour
 
         for (int i = 0; i < blocksToRotate.Length; i++)
         {
-            if(_blockMovement._checkCollisions[i].CheckWallLeftCollision()) transform.position = new Vector3(transform.position.x + _blockMovement.blockDifference, transform.position.y, 0);
-            if(_blockMovement._checkCollisions[i].CheckWallRightCollision()) transform.position = new Vector3(transform.position.x - _blockMovement.blockDifference, transform.position.y, 0);
+            if(_blockMovement._checkCollisions[i].CheckWallLeftCollision(1)) transform.position = new Vector3(transform.position.x + _blockMovement.blockDifference, transform.position.y, 0);
+            if(_blockMovement._checkCollisions[i].CheckWallRightCollision(1)) transform.position = new Vector3(transform.position.x - _blockMovement.blockDifference, transform.position.y, 0);
 
             blockStages[i] += 2;
             if (blockStages[i] > 7) blockStages[i] -= 8;

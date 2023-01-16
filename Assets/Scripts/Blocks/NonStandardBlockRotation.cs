@@ -16,6 +16,7 @@ public class NonStandardBlockRotation : MonoBehaviour
     public Transform center;
     public Transform[] blocksToRotate;
     public FieldsToMove[] fieldsToMove;
+    public int lenghtToCheck;
     public int[] blockStages;
     private int step;
     public List<Vector3> stages = new List<Vector3>();
@@ -76,8 +77,8 @@ public class NonStandardBlockRotation : MonoBehaviour
 
         for (int i = 0; i < blocksToRotate.Length; i++)
         {
-            if (_blockMovement._checkCollisions[i].CheckWallLeftCollision()) transform.position = new Vector3(transform.position.x + _blockMovement.blockDifference, transform.position.y, 0);
-            if (_blockMovement._checkCollisions[i].CheckWallRightCollision()) transform.position = new Vector3(transform.position.x - _blockMovement.blockDifference, transform.position.y, 0);
+            if (_blockMovement._checkCollisions[i].CheckWallLeftCollision(lenghtToCheck)) transform.position = new Vector3(transform.position.x + _blockMovement.blockDifference, transform.position.y, 0);
+            if (_blockMovement._checkCollisions[i].CheckWallRightCollision(lenghtToCheck)) transform.position = new Vector3(transform.position.x - _blockMovement.blockDifference, transform.position.y, 0);
         }
 
         switch (step)
