@@ -9,6 +9,7 @@ public class StageController : MonoBehaviour
     void Start()
     {
         int randomNumber = Random.Range(0, allBlocks.Length);
+        currentBlock = randomNumber;
 
         SpawnBlock(randomNumber);
     }
@@ -17,22 +18,27 @@ public class StageController : MonoBehaviour
     {
         Destroy(GameObject.FindGameObjectWithTag("FallingBlock"));
 
-        Instantiate(allBlocks[number], placeToSpawn.position, Quaternion.identity, transform);
+        Instantiate(allBlocks[number], placeToSpawn.position, transform.rotation, transform);
     }
 
     public void ChangeBlock(int value)
     {
         int newBlockValue = currentBlock + value;
 
-        if (newBlockValue < 0)
-        {
-            newBlockValue -= value;
-            newBlockValue += allBlocks.Length - 1;
-        }
-        else if (newBlockValue >= allBlocks.Length)
+        if (newBlockValue == allBlocks.Length)
         {
             newBlockValue -= value;
             newBlockValue -= allBlocks.Length - 1;
+        }
+        else if (newBlockValue < 0)
+        {
+            newBlockValue -= value;
+            newBlockValue += allBlocks.Length - 2;
+        }
+        else if (newBlockValue >= allBlocks.Length - 1)
+        {
+            newBlockValue -= value;
+            newBlockValue -= allBlocks.Length - 2;
         }
 
         currentBlock = newBlockValue;
