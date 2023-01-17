@@ -8,6 +8,22 @@ public class GameMenuController : MonoBehaviour
 
     public Button[] buttons;
 
+    void Update()
+    {
+        if (GameController.isGameRunning && !PlayerController.isDead)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                RotateButton();
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                FallButton();
+            }
+        }
+    }
+
     public void ReadyButton()
     {
         buttons[0].interactable = false;
@@ -17,7 +33,7 @@ public class GameMenuController : MonoBehaviour
             buttons[i].interactable = true;
         }
 
-        GameObject.FindGameObjectWithTag("Board").GetComponent<BoardController>().spawnBlock = true;
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>().RunGame();
     }
 
     public void RotateButton()

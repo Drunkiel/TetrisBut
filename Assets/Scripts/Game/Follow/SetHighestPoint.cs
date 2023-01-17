@@ -10,7 +10,7 @@ public class SetHighestPoint : MonoBehaviour
         if (highestPoint < value)
         {
             highestPoint = value;
-            transform.position = new Vector3(0, highestPoint + additionalHeight, 0);
+            transform.position = new Vector3(0, (highestPoint + additionalHeight) * 1.056f, 0);
         }
     }
 }

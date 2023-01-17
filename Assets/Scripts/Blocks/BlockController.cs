@@ -5,7 +5,7 @@ public class BlockController : MonoBehaviour
     public void SetBlocksToBoard()
     {
         GameObject board = GameObject.FindGameObjectWithTag("Board");
-        Transform boardTransform = board.transform.GetChild(5).transform;
+        Transform boardTransform = board.transform.GetChild(2).transform;
         Transform[] blocks = new Transform[transform.childCount];
 
         for (int i = 0; i < blocks.Length; i++)

@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
 
     void CheckIfNeedToUpdate()
     {
-        if (Mathf.Floor(player.position.y) + 5 > cameraHeight + 1)
+        if (Mathf.Floor(player.position.y) > cameraHeight + 1)
         {
             UpdateHeight(1);
         }

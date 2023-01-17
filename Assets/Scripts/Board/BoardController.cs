@@ -11,7 +11,7 @@ public class BoardController : MonoBehaviour
 
     void Update()
     {
-        if (spawnBlock) SpawnBlock();
+        if (spawnBlock && GameController.isGameRunning) SpawnBlock();
     }
 
     void SpawnBlock()
