@@ -1,16 +1,19 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class ScoreController : MonoBehaviour
 {
     public TMP_Text score;
     public TMP_Text height;
     public TMP_Text lifeTime;
+    public TMP_Text multiplier;
 
     public static int points;
-    public static float pointsMultiplier;
+    public static float pointsMultiplier = 0;
     public int playerHeight;
     public float livingTime;
+
+    public static float timeBeforeReset;
 
     private GameObject player;
 
@@ -27,6 +30,8 @@ public class ScoreController : MonoBehaviour
         {
             Timer();
             CheckPlayerHeight();
+            score.text = points.ToString();
+            multiplier.text = "x" + pointsMultiplier.ToString();
         }
     }
 
@@ -38,6 +43,12 @@ public class ScoreController : MonoBehaviour
     void Timer()
     {
         livingTime += Time.deltaTime;
+
+        if (pointsMultiplier >= 1)
+        {
+            if (timeBeforeReset > 0) timeBeforeReset -= Time.deltaTime;
+            else pointsMultiplier = GameController.gameMultiplier;
+        }
 
         int timeToDisplay = Mathf.FloorToInt(livingTime % 60);
         lifeTime.text = timeToDisplay.ToString();

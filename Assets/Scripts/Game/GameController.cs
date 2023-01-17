@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public static bool isGameRunning;
+    public static float gameMultiplier;
 
     public TMP_Text title;
 
@@ -19,17 +20,19 @@ public class GameController : MonoBehaviour
         switch (MainMenuController.pickedDifficulty)
         {
             case 0:
-                ScoreController.pointsMultiplier = 0.5f;
+                gameMultiplier = 0.5f;
                 break;
 
             case 1:
-                ScoreController.pointsMultiplier = 1f;
+                gameMultiplier = 1f;
                 break;
 
             case 2:
-                ScoreController.pointsMultiplier = 2f;
+                gameMultiplier = 2f;
                 break;
         }
+
+        ScoreController.pointsMultiplier = gameMultiplier;
 
         isGameRunning = true;
         GameObject.FindGameObjectWithTag("Board").GetComponent<BoardController>().spawnBlock = true;
