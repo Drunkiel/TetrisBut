@@ -12,6 +12,8 @@ public class BlockMovement : MonoBehaviour
     BlockController _blockController;
     public float blockDifference = 1.056f;
 
+    public GameObject dustParticle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,8 +52,8 @@ public class BlockMovement : MonoBehaviour
 
         for (int i = 0; i < ifTrue.Length; i++)
         {
-            if (left) ifTrue[i] = _checkCollisions[i].CheckWallLeftCollision();
-            if (right) ifTrue[i] = _checkCollisions[i].CheckWallRightCollision();
+            if (left) ifTrue[i] = _checkCollisions[i].CheckWallLeftCollision(1);
+            if (right) ifTrue[i] = _checkCollisions[i].CheckWallRightCollision(1);
 
             if (ifTrue[i]) return true;
         }
@@ -95,8 +97,15 @@ public class BlockMovement : MonoBehaviour
 
         if (nearestBlock >= 10) nearestBlock -= 1;
 
-        if (CheckIfPlayer(nearestBlock)) GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>().StopGame(true);
+        if (CheckIfPlayer(nearestBlock))
+        {
+            MusicController.playDeathClip = true;
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameController>().StopGame(true);
+        }
+
         transform.Translate(0, -blockDifference * Mathf.Floor(nearestBlock), 0);
+        Instantiate(dustParticle, transform);
+        MusicController.playFallClip = true;
 
         SetToCheck();
         _blockController.SetBlocksToBoard();
@@ -105,10 +114,7 @@ public class BlockMovement : MonoBehaviour
 
     void Movement()
     {
-        float playerX = 0;
-
-        if (TryGetComponent<BlockRotation>(out BlockRotation _blockRotation)) playerX = Mathf.Floor(player.position.x - _blockRotation.center.position.x);
-        else if (TryGetComponent<NonStandardBlockRotation>(out NonStandardBlockRotation _nonStandardBlockRotation)) playerX = Mathf.Floor(player.position.x - _nonStandardBlockRotation.center.position.x);
+        float playerX = Mathf.Floor(player.position.x - GetComponent<BlockRotation>().center.position.x);
 
         if (playerX >= Mathf.Floor(blockDifference))
         {
