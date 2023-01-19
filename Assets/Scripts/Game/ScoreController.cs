@@ -50,8 +50,8 @@ public class ScoreController : MonoBehaviour
             else pointsMultiplier = GameController.gameMultiplier;
         }
 
-        int timeToDisplay = Mathf.FloorToInt(livingTime % 60);
-        lifeTime.text = timeToDisplay.ToString();
+        float timeToDisplay = Mathf.Floor(livingTime);
+        lifeTime.text = timeToDisplay.ToString() + "s";
     }
 
     void CheckPlayerHeight()

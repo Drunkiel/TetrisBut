@@ -26,8 +26,7 @@ public class BlockController : MonoBehaviour
     public void AutoDestroy(bool destroyAll)
     {
         //Destroying parts to avoid bugs
-        if (TryGetComponent<BlockRotation>(out BlockRotation _blockRotation)) Destroy(_blockRotation);
-        else if (TryGetComponent<NonStandardBlockRotation>(out NonStandardBlockRotation _nonStandardBlockRotation)) Destroy(_nonStandardBlockRotation);
+        Destroy(GetComponent<BlockRotation>());
         Destroy(GetComponent<BlockMovement>());
 
         if (destroyAll)

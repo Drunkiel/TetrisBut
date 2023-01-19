@@ -44,10 +44,6 @@ public class GameMenuController : MonoBehaviour
         {
             _blockRotation.RotateBlock();
         }
-        else if (block.TryGetComponent<NonStandardBlockRotation>(out NonStandardBlockRotation _nonStandardBlockRotation))
-        {
-            _nonStandardBlockRotation.RotateBlock();
-        }
         else return;
     }
 
@@ -64,10 +60,6 @@ public class GameMenuController : MonoBehaviour
         if (block.TryGetComponent<BlockRotation>(out BlockRotation _blockRotation))
         {
             Destroy(_blockRotation);
-        }
-        else if (block.TryGetComponent<NonStandardBlockRotation>(out NonStandardBlockRotation _nonStandardBlockRotation))
-        {
-            Destroy(_nonStandardBlockRotation);
         }
         else return;
     }
